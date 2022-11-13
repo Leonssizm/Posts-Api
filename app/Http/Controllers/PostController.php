@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -22,26 +24,27 @@ class PostController extends Controller
     }
 
 
-    public function store(Request $request): JsonResponse
+    public function store(StorePostRequest $request): JsonResponse
     {
         $post = Post::create([
-        'title'=>$request->title,
-        'body'=>$request->body
+            "title"=>$request->title,
+            "body"=>$request->body
         ]);
 
         return response()->json(['post'=>$post], 201);
     }
 
-    public function update(Request $request, Post $post): JsonResponse
+    public function update(UpdatePostRequest $request, Post $post): JsonResponse
     {
         $post->update([
-            'title'=>$request->title,
-            'body'=>$request->body
+            "title"=>$request->title,
+            "body"=>$request->body
         ]);
 
 
         return response()->json(status: 204);
     }
+
 
     public function destroy(Post $post): JsonResponse
     {
